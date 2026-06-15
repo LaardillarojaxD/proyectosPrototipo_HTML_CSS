@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--etiqueta de lenguaje para especificar el idioma del documento de mi documento
+-->
+<head>
+    <meta charset="UTF-8">
+<!-- Este meta tag ayudará a poder entender como funciona el documento en diferentes navegadores y dispositivos
+    -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- los dos anteriores meta tags  hacen referencia a la compatibilidad y
+      el dimensionamiento del documento 
+      -->
+    <title>Mi trabajo de mis sueños</title>
+    <style>
+         /*estilo con CSS  para que no rompa con los estilos */
+         /* Estilos para mi tarea*/
+         /*el body es una etiqueta que utilicé para darle un estilo general con el background-color y el color del texto, así como también la tipografía y el margen y el padding para darle un poco de espacio al contenido */
+
+             body {
+                background-color: black ; /* Fondo claro para un aspecto limpio */
+                color: white; /* Texto oscuro para buena legibilidad */
+                font-family: Arial, sans-serif; /* Tipografía moderna(que se utiliza actualme) y legible */
+                margin: 20px; /* Espaciado alrededor del contenido para que no esté tan pegado a los bordes de la pantalla */
+                padding: 40px 20px; /*Esta parte me ayuda a darle un poco de espacio al contenido para que no esté tan pegado a los bordes de la pantalla */
+                
+                /*seccion1, con display, flex-direction y el align-items*/
+                display: flex; /* Utilizo flexbox para organizar el contenido de manera más flexible y responsiva */
+                flex-direction: column; /* Organiza el contenido en una columna vertical */
+                align-items: center; /* Centra el contenido horizontalmente, lo utilicé para familizarizarme con los estilos */
+             }
+S
+             /*CAjas de contenidos*/
+             .contenedor-seccion {
+                background-color:aqua; /* Fondo claro para resaltar el contenido */
+                border: 1px solid #094e9c; /* Borde sutil para definir los límites de la sección */
+                border-left: 5px solid #2ea44f; /* Línea acentuada en color verde Java/Spring para destacar la sección */
+                width: 100%; /* Ocupa todo el ancho disponible */
+                /*Sección 2 agregue un max-width para limitar el ancho de la sección y evitar que se desarme en pantallas muy grandes,
+                     esto es especialmente util para mantener
+                      una buena legibilidad en monitores grandes*/
+                max-width: 700px; /* Limita el ancho para que no se desarme*/
+                padding: 25px; /* Espaciado interno para que el contenido no esté pegado a los bordes de la sección */
+                margin-bottom: 30px; /* Separación externa hacia abajo para que las secciones no estén tan pegadas entre sí */
+                border-radius: 8px; /* Bordes suavemente redondeados para un aspecto más moderno y agradable a la vista */
+                box-shadow: 0 4px 12px rgba(37, 37, 37, 0.3); /* Sombra elegante detrás de la caja para darle profundidad y hacer que resalte del fondo */
+             }
+
+            /*Este selector de etiqueta es la de los títulos*/
+             h1 {
+                color:#002f64; /* Color oscuro para los títulos principales */
+                margin-top: 0; /* Elimina el margen superior para que el título esté más cerca del borde de la sección */
+                padding: 5px 0; /* Espaciado vertical para separar el título del contenido de la sección */
+                text-align: center; /* Centra el texto del título para un aspecto más equilibrado */
+            }
+
+             h2 {
+                color: #58a6ff; /* Azul tecnológico para los subtítulos, lo utilicé para darle un toque más moderno y tecnológico a los subtítulos */
+             }
+
+             .texto-resaltado {
+                color:#2ea44f; /* Color verde brillante para los textos resaltados, lo utilicé para destacar información importante y darle un toque de color que se asocia con Java/Spring */
+
+             }
+                /*Listas*/
+                /*Selector agrupado, debido a la (,)*/
+             ol, ul {
+                padding-left: 20px; /* Espaciado a la izquierda para las listas ordenadas y desordenadas, lo utilicé para mejorar la legibilidad de las listas y evitar que el texto esté pegado al borde izquierdo */
+             }
+
+            /*Selector de etiqueta*/
+             li { 
+                margin-bottom: 8px; /* Espaciado entre los elementos de las listas para que no estén amontonados, lo utilicé para mejorar la legibilidad de las listas y hacer que cada elemento tenga su propio espacio */
+             }
+
+            /*Selector de etiqueta */
+             table {
+                width: 100%; /* La tabla ocupa todo el ancho disponible para que se vea bien en diferentes tamaños de pantalla */
+                /*Estilo para la tabla, el cual investigue*/
+                border-collapse: collapse; /* Elimina los espacios entre las celdas para un aspecto más limpio y profesional */
+                background-color: #0d1117; /* Fondo oscuro para la tabla que resalta del fondo general, lo utilicé para darle un aspecto más elegante y profesional a la tabla */
+                margin: 20px 0; /* Espaciado vertical alrededor de la tabla para*/
+             }
+
+            /*Selector agrupado (,) */
+             th, td {
+                padding: 10px 15px; /* Espaciado interno para que el contenido de las celdas no esté pegado a los bordes */
+                
+             }
+
+             thead {
+                background-color: #161b22; /* Fondo oscuro para el encabezado de la tabla que resalta del fondo de la tabla, lo utilicé para diferenciar visualmente el encabezado del resto de la tabla y darle un aspecto más profesional */
+                margin-bottom: 10px; /* Espaciado debajo del encabezado para separarlo del contenido de la tabla */
+             }
+
+             /*Aquí podré otro de th para 
+             darle un estilo específico 
+             (selector de etiqueta )*/
+
+             th {
+                color:#58a6ff; /* Color azul tecnológico para los encabezados de las columnas, lo utilicé para darle un toque más moderno y tecnológico a los encabezados de la tabla */
+                font-weight: 600; /* Aumenta el grosor de la fuente para los encabezados de las columnas para que se destaquen más, lo utilicé para mejorar la legibilidad de los encabezados y hacer que se vean más importantes dentro de la tabla */
+                border-bottom: 2px solid #30363d; /* Línea debajo de los encabezados de las columnas para separarlos visualmente del resto de la tabla, lo utilicé para darle un aspecto más profesional a la tabla y mejorar la legibilidad de los encabezados */
+                
+                
+             }
+
+             /*usare el tbody tr para 
+             darle un estilo específico 
+             (Selector de etiqueta anidada)*/
+             tbody tr {
+                border-bottom: 1px solid #21262d; /* Línea debajo de cada fila para separar visualmente las filas de la tabla, lo utilicé para mejorar la legibilidad de la tabla y hacer que cada fila tenga su propio espacio */
+             }
+
+             /*Agregaré otro selector de etiqueta agrupada*/
+             tfoot td {
+                background-color: #161b22; /* Fondo oscuro para el pie de la tabla que resalta del fondo de la tabla, lo utilicé para diferenciar visualmente el pie de la tabla del resto de la tabla y darle un aspecto más profesional */
+                color: #58a6ff; /* Color azul tecnológico para el texto del pie de la tabla, lo utilicé para darle un toque más moderno y tecnológico al pie de la tabla */
+                font-weight: 600; /* Aumenta el grosor de la fuente para el texto del pie de la tabla para que se destaque más, lo utilicé para mejorar la legibilidad del pie de la tabla y hacer que se vea más importante dentro de la tabla */
+                padding: 12px 15px; /* Espaciado interno para que el contenido del pie de la tabla no esté pegado a los bordes, lo utilicé para mejorar la legibilidad del pie de la tabla y hacer que el contenido tenga su propio espacio dentro del pie */
+             }
+
+             /*Esto me ayudará a mejorar la apariencia de la imagen*/
+             .imagen_plan_carrera2 {
+                width: 100%; /* La imagen se adapta al ancho del contenedor para que se vea bien en diferentes tamaños de pantalla, lo utilicé para asegurarme de que la imagen se vea bien y no se desarme en pantallas más pequeñas o más grandes */
+                max-width: 600px; /* Limita el ancho máximo de la imagen para evitar que se vea demasiado grande en pantallas muy grandes, lo utilicé para mantener una buena apariencia de la imagen en diferentes tamaños de pantalla */
+            }
+
+
+
+    </style>
+
+
+<!--   Aquí  ya vendrá practicamente el esqueleto de la estructura de la posición
+    de la página-->
+    </head>
+<body>
+    <h1>Lo que deseo lograr</h1>
+    <p>Los requisitos para tener esta posición son: 
+        <span style="font-weight: bold;">Experiencia en desarrollo web con Java puro y microservicios</span>
+    </p>
+    <div class="contenedor-seccion">
+        <h1>Requisitos para ser un senior Java y analista de datos</h1>
+        <ol>
+            <li>Conocimiento de frameworks como Spring Boot, GO, etc.</li>
+            <li>Habilidades de análisis de datos y visualización</li>
+            <li>Capacidad para trabajar en equipo y colaborar con otros desarrolladores</li>
+        </ol>
+    </div>
+    <h1>Mi plan de carrera</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Año</th>
+                <th>Objetivo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2026</td>
+                <td>Certifircarme y obtener habilidades de programación en Java y Spring Boot</td>
+                <td>Realizar cursos y exámenes de certificación</td>
+            </tr>
+            <tr>
+                <td>2027</td>
+                <td>Ganar experiencia práctica en proyectos de Java y Spring Boot</td>
+                <td>Participar en proyectos personales o colaborativos utilizando Java y Spring Boot</td>
+            </tr>
+            <tr>
+                <td>2027</td>
+                <td>Desarrollar liderazgo y habilidades de gestión en proyectos de Java y Spring Boot</td>
+                <td>Asumir responsabilidades de liderazgo en proyectos y terminar mi carrera de desarrollador</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <td colspan="3">Este es mi plan de carrera para alcanzar mi objetivo de ser un senior Java</td>
+        </tfoot>
+    </table>
+    <p>Imagen que ingresaré:  <span style="font-weight: bold;">En esta imagen</span></p>
+
+<div id = "Seccion_plan_carrera">
+    <h1>Imagen de carrera profesional</h1> 
+    <!-- Esta imagen representa el camino que quiero seguir en mi carrera profesional el class representa 
+    el estilo de la imagen y el src es la fuente de la imagen y el alt es el texto alternativo
+     que se muestra si la imagen no se puede cargar.
+     y el src sería la dirección de la imagen que quiero mostrar en mi documento  y  el alt es el texto alternativo
+    que se muestra si la imagen no se puede cargar.
+
+     -->
+    <img class ="imagen_plan_carrera2" src="imagenDesarrollador2.jpg" alt="Imagen de carrera profesional en tecnología">
+    <p>Esta imagen representa el camino que quiero seguir en mi carrera profesional.</p>
+
+</div>
+
+
+</body>
+</html>
