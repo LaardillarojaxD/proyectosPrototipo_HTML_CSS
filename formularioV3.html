@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>formulariov3</title>
+    <style>
+        body {
+            color: #02fff2;
+            background-color: #0d1117;
+            
+            /*Arreglos dentro de la leta*/
+            font-family:'Segoe UI', Arial, sans-serif;
+            margin: 5px;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column; /*alinea todo de forma horizontal en conjunto con el flex*/
+            align-items: center; /*Centra todo*/
+            font-weight: 600;
+
+
+        }
+
+        h1 {
+            color: #58a6ff;
+            font-size: 1.8rem; /*Esto permite ajustar el tamaño del texto*/
+            margin-bottom: 25px; /*Ajusta el especio del mismo*/
+            text-align: center;
+
+        }
+
+        /*En este parte estilizaré el contenedor del formulario*/
+        form {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-top: 5px solid #00eeff; /*permite generar un borde arroba del formulario para parecer que está seperando como una línea*/
+            width: 100%;
+            padding: 30px;
+            border-radius: 8px;
+            /*Este me ayuda a poder estilizarlo más y ña posición difumina con el 12 y se ve amejor*/
+            box-shadow: 0 4px 12px rgb(0, 0, 0, 0.5);
+        }
+        
+        .formularioGrupo {
+            /*Estos dos últimos me ayudan a acomodar las cajas más lineas y ordenada*/
+            display: flex;
+            /*Esta posiciona los input  como el texarea por abajo*/
+            flex-direction: column;
+            /*Esto me permite ajustar el tamaño para intentar omitir mejor los br*/
+            margin-bottom: 5px; /*se puede dejar también en %*/
+
+        
+        }
+
+        /*En este parte será para el diseño  moderno para los cuadros de texto*/
+        .formularioGrupo input[type="text"],
+        .formularioGrupo input[type="email"],
+        .formularioGrupo input[type="password"],
+        .formularioGrupo textarea {
+            background-color: #0d1117;
+            border: 1px solid #4a515a;
+            color:aqua;
+            padding: 3px;
+            border-radius: 5px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+
+            
+
+        }
+
+        /*Sección  de botones*/
+        .titulo_1 {
+            margin-bottom: 20px;
+
+
+        }
+        
+        /*La que está conectada con el span y la class de la dev formula_3*/
+        .formula_3, .titulo_1  {
+            color: #02fff2;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 12px;
+        }
+        
+        .radio_opcion {
+         display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+
+        }
+
+        /*sección de los botones midan lo mismo,aquí podriá estar el de limpiar input[type="reset"]*/
+        input[type="submit"] {
+            flex: 5;
+            padding: 10px;
+            color: #063985;
+            background-color: #02fff2;
+            
+        }
+
+        /*En este apartado estilizaré los botones*/
+        .botones_opciones {
+            display: flex;
+            padding: 20px 0px;
+            gap: 50px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>
+        Registro de persona usuaria
+    </h1>
+    <!-- el form con el action acerca de como
+      enviará la información
+      -->
+<form action="procesar_formulario.php" method="post">
+
+        <div class="formularioGrupo">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div class="formularioGrupo">    
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" required>
+        </div>
+        <div class="formularioGrupo">
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="formularioGrupo">
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+       <!-- Un ejemplo de como quedaría la edad en caso  de que llegará aplicarlo en algún momento, 
+        con min  y el max para ajustar el número de edad
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" 
+        min="0" 
+        max="120">
+        Ejemplo de los <br><br>
+        -->
+        <div class="formularioGrupo">
+        <label for="mensaje">Escribe aquí acerca de ti: </label>
+           <br>
+               <textarea id="mensaje" name="mensaje" 
+        rows="4" 
+        cols="50">
+               </textarea>
+        </div>
+        <div class="formula_3">
+        <span class="titulo_1">Selecciona el de tu interés: </span>
+    </div>
+    <div class="radio_opcion">
+        <label for="pref_tecnologia">Tecnología: </label>
+        <input type="radio" id="pref_tecnologia" name="interes" value="Tecnología"/>
+        
+    </div>
+    <div class="radio_opcion">
+
+        <label for="pref_arte">Arte: </label>
+        <input type="radio" id="pref_arte" name="interes" value="Arte"/>
+    </div>
+    <div class="radio_opcion">
+        <label for="pref_deporte">Deporte: </label>
+        <input type="radio" id="pref_deporte" name="interes" value="Deporte"/>
+    </div>    
+    <div class="botones_opciones">
+        <input type="submit" value="Enviar">
+
+        <!-- este es un ejemplo de como quedaría con el reset
+        <input type="reset" value="Limpiar">
+        -->
+    </div>    
+
+</form>
+    
+</body>
+</html>
