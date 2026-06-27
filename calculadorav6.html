@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Proyecto Calculadora</title>
+    <style>
+        /*selectores del cuerpo o bien de la página casi general*/
+        body {
+            background-color: #000000; /* Fondo Negro solicitado */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            /* Comic Sans MS, Tamaño 18px, Bold */
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        h1 {
+            color: #00f0ff; /* Toque Cian */
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+
+        /* Selectores de clase*/
+        .calculadora {
+            background-color: #121212; /* Fondo interno negro mate */
+            width: 100%;
+            max-width: 340px;
+            padding: 25px;
+            border-radius: 16px;
+            border: 3px solid #00f0ff; /* Bordes en Cian */
+            box-shadow: 0px 8px 24px rgba(0, 240, 255, 0.2);
+            box-sizing: border-box;
+        }
+
+        .cuadricula-botones {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 15px;
+            font-family: inherit;
+            font-size: 18px; 
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-numero {
+            background-color: #00f0ff; /* Botones numéricos en Cian */
+            color: #000000; /* Texto en Negro */
+        }
+
+        .btn-operador {
+            background-color: #8db600; /* Verde Manzana Mate */
+            color: #ffffff;
+        }
+
+        .comentario-final {
+            background-color: #8db600; /* Verde Manzana Mate */
+            color: #000000;
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            width: 100%;
+            max-width: 340px;
+            box-sizing: border-box;
+            border: 2px solid #00f0ff;
+        }
+
+        /*Selectores ID*/
+        #pantalla {
+            width: 100%;
+            height: 60px;
+            background-color: #000000;
+            border: 2px solid #00f0ff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #8db600; /* Dígitos en Verde Manzana Mate */
+            font-family: inherit;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: right;
+            padding: 10px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        #btn-limpiar {
+            background-color: #ff3b30;
+            color: #ffffff;
+        }
+
+        #btn-igual {
+            background-color: #8db600; /* Verde Manzana Mate */
+            color: #000000;
+            grid-row: span 2; /* Dos filas sin romper el diseño */
+            height: 100%;    
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Calculadora Básica</h1>
+
+    <div class="calculadora">
+        <input type="text" id="pantalla" value="0" readonly>
+
+        <div class="cuadricula-botones">
+            <!--Esta la cambié  igual la pude dejar con onclick, solo lo dejo de ejemplo-->
+            <button class="btn" id="btn-limpiar">C</button>
+            
+            <button class="btn btn-operador" onclick="prepararOperacion('/')">/</button>
+            <button class="btn btn-operador" onclick="prepararOperacion('*')">*</button>
+            <button class="btn btn-operador" onclick="prepararOperacion('-')">-</button>
+
+            <button class="btn btn-numero" onclick="agregarNumero('7')">7</button>
+            <button class="btn btn-numero" onclick="agregarNumero('8')">8</button>
+            <button class="btn btn-numero" onclick="agregarNumero('9')">9</button>
+            <button class="btn btn-operador" onclick="prepararOperacion('+')">+</button>
+
+            <button class="btn btn-numero" onclick="agregarNumero('4')">4</button>
+            <button class="btn btn-numero" onclick="agregarNumero('5')">5</button>
+            <button class="btn btn-numero" onclick="agregarNumero('6')">6</button>
+            <!--Quería ponerlo más arriba, pero se puede llegar a mover, por eso se deja aquí-->
+            <button class="btn" id="btn-igual">=</button>
+
+            <button class="btn btn-numero" onclick="agregarNumero('1')">1</button>
+            <button class="btn btn-numero" onclick="advancedBtnClick('2')">2</button> 
+            <button class="btn btn-numero" onclick="agregarNumero('3')">3</button>
+
+            <button class="btn btn-numero" style="grid-column: span 3;" onclick="agregarNumero('0')">0</button>
+        </div>
+    </div>
+
+    <div class="comentario-final">
+        <h2>Este ya lo dejaría como el proyecto final</h2>
+        <p>Espero que me dejen algún comentario positivo</p>
+    </div>
+
+    <script>
+        // Mis constantes numéricas/operacionales para que no se puedan cambiar
+        const CERO_REINICIO = '0';
+        const ERROR_DIV_CERO = 'Error';
+
+        /* para mis selectores de ID y Elemento */
+        const campoPantalla = document.getElementById('pantalla');
+        const botonLimpiar = document.getElementById('btn-limpiar');
+        const botonCalcular = document.getElementById('btn-igual');
+
+        /* Objeto que controla los datos internos mediante GET y SET
+           combinando la lógica con los operadores */
+        const memoriaCalculadora = {
+            /*Aquí serán mis variables*/
+            _valorEnPantalla: CERO_REINICIO,
+            primerOperando: null,
+            operadorAsignado: null,
+            reiniciarPantalla: false,
+             
+            //Mi encapsulamiento
+            // Envía el valor lógico actual
+            get valor() {
+                return this._valorEnPantalla;
+            },
+
+            // Sincroniza automáticamente la lógica y con la vista del DOM para la pantalla
+            set valor(nuevoValor) {
+                this._valorEnPantalla = nuevoValor;
+                campoPantalla.value = this._valorEnPantalla; // Manipulación directa del DOM
+            }
+        };
+
+        // función uno el que tendrá que  añadir números a la memoria usando el SETTER
+        function agregarNumero(numero) {
+            if (memoriaCalculadora.reiniciarPantalla) {
+                memoriaCalculadora.valor = numero; 
+                memoriaCalculadora.reiniciarPantalla = false;
+            } else {
+                if (memoriaCalculadora.valor === CERO_REINICIO) {
+                    memoriaCalculadora.valor = numero; 
+                } else {
+                    memoriaCalculadora.valor += numero; // Combina GETTER (lee) y SETTER (escribe)
+                }
+            }
+        }
+
+        // funciono dos la que tendrá que almacenar el operador aritmético elegido
+        //ESto de mi memoriaCalculadora
+        function prepararOperacion(operadorSeleccionado) {
+            memoriaCalculadora.primerOperando = parseFloat(memoriaCalculadora.valor);
+            memoriaCalculadora.operadorAsignado = operadorSeleccionado;
+            memoriaCalculadora.reiniciarPantalla = true;
+        }
+
+        /* Este será el un evento de  click del cerebro reacciona al ID del botón,
+           pero además lee las clases del elemento para validar criterios. */
+        botonCalcular.addEventListener('click', function() {
+            if (memoriaCalculadora.operadorAsignado === null || memoriaCalculadora.reiniciarPantalla) {
+                return;
+            }
+
+            //Lee la información del elemento a través de sus clases
+            const tieneClaseBoton = botonCalcular.classList.contains('btn'); // Valida clase del elemento
+            const nombreElemento = botonCalcular.tagName; // Valida tipo de elemento HTML
+
+            // Si pasa la validación de estructura de selectores (siempre dará true)
+            if (tieneClaseBoton && nombreElemento === 'BUTTON') {
+                const segundoOperando = parseFloat(memoriaCalculadora.valor);
+                let resultadoFinal = 0;
+
+                // Este sería el cerebro  que aplique con un switch para la operación seleccionada
+                //Además cuenta con break lo que ayudará a salir del bucle
+                switch (memoriaCalculadora.operadorAsignado) {
+                    case '+':
+                        resultadoFinal = memoriaCalculadora.primerOperando + segundoOperando;
+                        break;
+                    case '-':
+                        resultadoFinal = memoriaCalculadora.primerOperando - segundoOperando;
+                        break;
+                    case '*':
+                        resultadoFinal = memoriaCalculadora.primerOperando * segundoOperando;
+                        break;
+                    case '/':
+                        resultadoFinal = segundoOperando === 0 ? ERROR_DIV_CERO : memoriaCalculadora.primerOperando / segundoOperando;
+                        break;
+                }
+
+                // El setter actualiza  al DOM de la ppagina y cambiará la pantalla física 
+                //Esto de acuerdo a sus métodos, transforma texto  y se lo mandará a mi set 
+                //Para que pueda realizar como una actualización de refresco y poder mostrar el resultado final
+
+                memoriaCalculadora.valor = String(resultadoFinal);
+                memoriaCalculadora.operadorAsignado = null;
+                memoriaCalculadora.primerOperando = null;
+                memoriaCalculadora.reiniciarPantalla = true;
+            }
+        });
+
+        //Esta funcion podrá resetear completo al presionar el ID único 'btn-limpiar'
+        botonLimpiar.addEventListener('click', function() {
+            memoriaCalculadora.valor = CERO_REINICIO; 
+            memoriaCalculadora.primerOperando = null;
+            memoriaCalculadora.operadorAsignado = null;
+            memoriaCalculadora.reiniciarPantalla = false;
+        });
+        //función con el  que agregara el numero
+        function advancedBtnClick(num) {
+            agregarNumero(num);
+        }
+    </script>
+</body>
+</html>
