@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticiero Chido - AJAX Pro</title>
+    <style>
+        /* Selector de fondo color*/
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #000000; /*fondo negro original de mi estilo */
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Encabezado del sistema */
+        .header-noticiero {
+            text-align: center;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .titulo {
+            color: #00c3ff; /*Selector de mi color favorito cian original */
+            font-size: 2.2rem;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px rgba(0, 195, 255, 0.6);
+        }
+
+        /*Texto claro sobre fondo negro */
+        .subtitulo {
+            font-size: 16px;
+            color: #8b949e; 
+            margin: 0 0 20px 0;
+        }
+
+        /* Botón interactivo para refrescar datos por AJAX */
+        #btn-sincronizar {
+            background-color: #00c3ff;
+            color: #000000;
+            border: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            font-family: inherit;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 195, 255, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #btn-sincronizar:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 15px #00c3ff;
+        }
+
+        /* Desde aquí están mis clases */
+        /* clase adaptada */
+        .noticieroChido {
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px; /* Espaciado automático entre noticias sin usar <br>  en caso de tener esta forma opcional*/
+            margin-top: 20px;
+        }
+
+        /* Tarjeta de noticia generada dinámicamente */
+        .tarjeta-noticia {
+            background-color: #0d1117; /* Gris oscuro para contraste */
+            border: 2px solid #00c3ff; /* Borde con tu cian insignia */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(240, 0, 0, 0.4); 
+            transition: transform 0.2s, box-shadow 0.2s;
+            
+        }
+
+        .tarjeta-noticia:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(240, 0, 0, 0.7); /* Intensifica el rojo al pasar el mouse, le da una sombra más padre*/
+        }
+
+        /* Estilos internos de la noticia para legibilidad */
+        .noticia-titular {
+            color: #00c3ff;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .noticia-titular:hover {
+            text-decoration: underline;
+        }
+
+        .noticia-autor {
+            font-size: 0.8rem;
+            color: #58a6ff;
+            margin-bottom: 12px;
+        }
+
+        .noticia-cuerpo {
+            font-size: 0.95rem;
+            color: #c9d1d9; /* Texto claro para lectura confortable */
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Estados de carga y error, el cual es el mensaje de alerta */
+        .alerta-estado {
+            text-align: center;
+            color: #00c3ff;
+            font-style: italic;
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bloque de Encabezado y Barra de Navegación -->
+    <div class="header-noticiero">
+        <h1 class="titulo">NoticieroUVEGDani</h1>
+        <p class="subtitulo">Alimentado asíncronamente con JSON y AJAX (Sintaxis Async/Await)</p>
+        <!--<button id="btn-sincronizar"> Actualizar </button>-->
+        <button id="btn-sincronizar">Actualizar información</button>
+    </div>
+
+    <!-- Aquí es donde AJAX cargará los datos, la class de noticia y el contenedor -->
+    <div class="noticieroChido" id="contenedor-noticias"></div>
+
+    <!-- Lógica JavaScript: PETICIÓN FETCH ASÍNCRONA -->
+    <script>
+        // Atrapa las identidades únicas por ID por medio de los métodos del DOM y con constantes para que no se reescriban
+        const contenedor = document.getElementById('contenedor-noticias');
+        const botonActualizar = document.getElementById('btn-sincronizar');
+
+        // FUNCIÓN ASÍNCRONA: Realiza el ciclo completo de AJAX
+        async function traerNoticiasDeInternet() {
+            // Le ingresaré un mensaje de espera en lo que responde el servidor remoto
+            contenedor.innerHTML = '<div class="alerta-estado">Descargando paquetes JSON desde la API...</div>';
+
+            // Bloque estructural try/catch para controlar errores de red
+            try {
+                // Envío de solicitud HTTP por método FETCH (AJAX actual)
+                //Aquí es donde en caso de tener una API propia, se puede cambiar la URL por la de tu servidor remoto, gracias al fetch()
+                const respuestaWeb = await fetch('https://inshorts.vercel.app/news?category=science');
+                
+                // Validación del estatus de la respuesta (Por si responde un error 404 o 500)
+                if (!respuestaWeb.ok) {
+                    // Si la respuesta no es OK, lanza un error con el código de estado
+                    throw new Error(`Error de servidor remoto. Código: ${respuestaWeb.status}`);
+                }
+
+                // Se extrae el cuerpo del recurso y lo parseamos a JSON estructurado, viene el await para esperar la respuesta de la promesa
+                //const datosFormateados = await respuestaWeb.ok ? await respuestaWeb.json() : null;
+                const datosFormateados = await respuestaWeb.json();
+
+                // Se limpia el contenedor para meter la información fresca
+                contenedor.innerHTML = '';
+
+                // Recorre los datos del JSON (Solo las primeras 4 noticias, en caso de que la API tenga muchas noticias, para no saturar la pantalla)
+                const bloqueNoticias = datosFormateados.data.slice(0, 4);
+                
+                bloqueNoticias.forEach(noticia => {
+                    // Nnodo article para la tarjeta
+                    const tarjeta = document.createElement('article');
+                    tarjeta.className = 'tarjeta-noticia';
+
+                    // Aquí se asignan las propiedades del JSON directo a la estructura estilizada
+                    tarjeta.innerHTML = `
+                        <a href="${noticia.url}" target="_blank" class="noticia-titular">
+                            ${noticia.title}
+                        </a>
+                        <div class="noticia-autor">
+                            Corresponsal: ${noticia.author || 'Redacción'} | Hora: ${noticia.time || 'Ahorita'}
+                        </div>
+                        <p class="noticia-cuerpo">
+                            ${noticia.content}
+                        </p>
+                    `;
+
+                    // Colocamos la tarjeta dentro de la div principal .noticieroChido
+                    contenedor.appendChild(tarjeta);
+                });
+
+            } catch (error) {
+                // Captura del error si se cae el internet o falla el formateo JSON
+                console.error("Detalle del fallo capturado:", error);
+                contenedor.innerHTML = `
+                    <div class="alerta-estado" style="color: #ff7b72; border: 1px dashed #f85149; border-radius: 8px;">
+                        Error en la conexión AJAX. No se pudo enlazar la API o los datos JSON venían corruptos.
+                    </div>
+                `;
+            }
+        }
+
+        // CONTROL DE EVENTOS:
+        // Ejecuta de forma automática al abrir la pantalla
+        window.addEventListener('DOMContentLoaded', traerNoticiasDeInternet);
+
+        //Ejecuta de forma asíncrona al dar clic en tu botón de actualización
+        botonActualizar.addEventListener('click', traerNoticiasDeInternet);
+    </script>
+</body>
+</html>
